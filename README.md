@@ -9,14 +9,14 @@ This R package contains useful parsers for the outputs of busco, quast, and anti
 ```{r}
 pak::pak("LiviaSongster/useful.parsers")
 
-# library and test it
 library(useful.parsers)
 
 # see functions in the package
 getNamespaceExports("useful.parsers")
 # there should be 5:
 # [1] "antismash_parseR" "import_gbk"       "find_bb_type"     "parse_busco"     
-# [5] "parse_quast"   
+# [5] "parse_quast"  
+
 # if not, Session > Restart and try install again
 
 # check the help page for each function by typing:
@@ -34,13 +34,7 @@ getNamespaceExports("useful.parsers")
 ## parse_busco
 
 ```{r}
-# --------------------------
-# 1. parse busco output
-# --------------------------
-
-# --------------------------
-# 1A. parse a single file:
-
+# parse a single file:
 dir="/Users/songs005/Documents/Scripts/R_packages/useful.parsers/data"
 file_name=paste0(dir,"/busco/NRRL3249_short_summary.txt")
 busco_output <- parse_busco(file_name)
@@ -49,7 +43,8 @@ busco_output <- parse_busco(file_name)
 head(busco_output)
 
 # --------------------------
-# 2B. batch process a dir full of busco summary tables:
+
+# batch process a dir full of busco summary tables:
 # first get list of files in the dir
 busco_list <- list.files(paste0(dir,"/busco"),full.names = TRUE)
 
@@ -74,13 +69,7 @@ unique(busco_batch_output$Accession)
 NOTE - the values parsed here will all be character, NOT numeric, so make sure to fix that downstream if you need to do any averaging or plotting.
 
 ```{r}
-# --------------------------
-# 2. parse quast output
-# --------------------------
-
-# --------------------------
-# 2A. parse a single file:
-
+# parse a single file:
 dir="/Users/songs005/Documents/Scripts/R_packages/useful.parsers/data"
 file_name=paste0(dir,"/quast/MTD517_report.tsv")
 quast_output <- parse_quast(file_name)
@@ -89,7 +78,8 @@ quast_output <- parse_quast(file_name)
 head(quast_output)
 
 # --------------------------
-# 2B. batch process a dir full of quast outputs:
+
+# batch process a dir full of quast outputs:
 
 # first get list of files in the dir
 quast_list <- list.files(paste0(dir,"/quast"),full.names = TRUE)
@@ -114,15 +104,15 @@ unique(quast_batch_output$Accession)
 ## antismash_parseR
 
 ```{r}
-# --------------------------
-# 3. parse antismash output
-# --------------------------
+# process a single antismash output dir
 dir="/Users/songs005/Documents/Scripts/R_packages/useful.parsers/data"
 dir_name=paste0(dir,"/antismash/NRRL3510_antismash_7.1.0")
 
 antismash_parseR(dir_name,
                  output_dir=paste0(dir,"/antismash/parseR_output"),
                  output_gbks=TRUE)
+
+# --------------------------
 
 # process a list of dirs
 anti_dir_list <- list.dirs(paste0(dir,"/antismash"),
@@ -144,5 +134,4 @@ lapply(anti_dir_list, function(x) {
     return(NULL)  # Return NULL so it can be filtered out later
   })
 })
-
 ```
